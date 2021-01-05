@@ -1,11 +1,9 @@
 package com.tekarch.SalesForceTesting;
 
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 public class AccountTestingAccountLink extends SFUtility{
@@ -15,21 +13,16 @@ public class AccountTestingAccountLink extends SFUtility{
 		launchBrowser();
 		goToSalesForceURL();
 		loginToSalesForce();
-		openAccountLink();
+		openAccountTab();
+		closePopUpWindow();
 		
-		Thread.sleep(5000);
-		Robot rb = new Robot();
-		rb.keyPress(KeyEvent.VK_ESCAPE);
-		rb.keyRelease(KeyEvent.VK_ESCAPE);
-		Thread.sleep(5000);
-		
-		//testingCreateNewAccount();
-		//testingCreateNewView();
-		//testingEditView();
-		//testingMergeAccounts();
+//		testingCreateNewAccount();
+//		testingCreateNewView();
+//		testingEditView();
+//		testingMergeAccounts();
 		testingCreateAccountReport();
 		
-		//quitBrowser();
+		quitBrowser();
 
 	}
 	
@@ -103,49 +96,40 @@ public class AccountTestingAccountLink extends SFUtility{
 	public static void testingCreateAccountReport() throws Exception {
 		
 		driver.findElement(By.xpath("//a[contains(text(),'Accounts with last activity > 30 days')]")).click();
-//		waitExplicitly(2, driver.findElement(By.xpath("//input[@id='ext-gen20']")));
-//		driver.findElement(By.xpath("//input[@id='ext-gen20']")).click();
-		
+		waitExplicitly(5, driver.findElement(By.xpath("//input[@id='ext-gen20']")));
 		driver.findElement(By.xpath("//input[@id='ext-gen20']")).click();
-		driver.findElement(By.xpath("//div[contains(text(),'Created Date')]")).click();
 		
-		waitExplicitly(2, driver.findElement(By.xpath("//img[@id='ext-gen152']")));
-		driver.findElement(By.xpath("//img[@id='ext-gen152']")).click();
-		waitExplicitly(2, driver.findElement(By.xpath("//button[@id='ext-gen311']")));
-		driver.findElement(By.xpath("//button[@id='ext-gen311']")).click();
+		driver.findElement(By.xpath("//div[contains(text(),'Created Date')]")).click();//selecting option from date field
 		
-		waitExplicitly(2, driver.findElement(By.xpath("//img[@id='ext-gen154']")));
-		driver.findElement(By.xpath("//img[@id='ext-gen152']")).click();
-		waitExplicitly(2, driver.findElement(By.xpath("//button[@id='ext-gen330']")));
-		driver.findElement(By.xpath("//button[@id='ext-gen330']")).click();
+		waitExplicitly(5, driver.findElement(By.xpath("//*[@id='ext-gen152']")));//from date
+		driver.findElement(By.xpath("//*[@id='ext-gen152']")).click();
+		waitExplicitly(2, driver.findElement(By.xpath("//button[contains(text(),'Today')]")));
+		driver.findElement(By.xpath("//button[contains(text(),'Today')]")).click();
 		
-		driver.findElement(By.xpath("//save //button[@id='ext-gen49']")).click();
+		waitExplicitly(2, driver.findElement(By.xpath("//*[@id='ext-gen154']")));//to date
+		driver.findElement(By.xpath("//*[@id='ext-gen152']")).click();
+		waitExplicitly(2, driver.findElement(By.xpath("//button[contains(text(),'Today')]")));
+		driver.findElement(By.xpath("//button[contains(text(),'Today')]")).click();
 		
+		driver.findElement(By.xpath("//button[@id='ext-gen49']")).click();//save
+		
+		driver.switchTo().activeElement();
+		
+		driver.findElement(By.xpath("//input[@id='saveReportDlg_reportNameField']")).sendKeys("Hackathon");//assigning name to report
+		driver.findElement(By.xpath("//input[@id='saveReportDlg_DeveloperName']")).click();//assigning unique name
+		
+		//driver.findElement(By.id("ext-gen317")).click();
+		waitExplicitly(5, driver.findElement(By.xpath("//table[@id='dlgSaveAndRun']")));//save and run report //button[contains(text(),'Save and Run Report')]
+		driver.findElement(By.xpath("//table[@id='dlgSaveAndRun']")).click();
+//		Actions action = new Actions(driver);
+//		WebElement mHover = driver.findElement(By.xpath("//button[contains(text(),'Save and Run Report')]"));
+//		action.moveToElement(mHover).click().build().perform();
+		
+		driver.switchTo().defaultContent();
+		Thread.sleep(5000);
+		System.out.println("Report with defined credentials saved and generated.");
 
-//		
-//		ArrayList<String> windows = new ArrayList<String>(driver.getWindowHandles());
-//		System.out.println(windows.size());
-//		driver.switchTo().window(windows.get(1));
-//		Thread.sleep(5000);
-//		
-//		driver.findElement(By.xpath("//input[@id='saveReportDlg_reportNameField']")).sendKeys("Testing");
-//		waitExplicitly(1, driver.findElement(By.xpath("//input[@id='saveReportDlg_DeveloperName']")));
-//		driver.findElement(By.xpath("//input[@id='saveReportDlg_DeveloperName']")).click();
-//		driver.findElement(By.xpath("//button[@id='ext-gen356']")).click();
-//		
-//		driver.switchTo().window(windows.get(0));
-		
-		
-		//div[contains(text(),'Created Date')]
-		
-		//from-//img[@id='ext-gen152']  //button[@id='ext-gen311']
-		//img[@id='ext-gen154'] //button[@id='ext-gen330']
-		
-		//save //button[@id='ext-gen49']
-		
-		//input[@id='saveReportDlg_reportNameField']
-		//input[@id='saveReportDlg_DeveloperName']
-		//button[@id='ext-gen356']
+
 	}
 
 }

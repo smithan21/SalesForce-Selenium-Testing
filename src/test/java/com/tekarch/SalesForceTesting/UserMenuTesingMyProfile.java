@@ -15,9 +15,9 @@ public class UserMenuTesingMyProfile extends SFUtility{
 		
 		driver.findElement(By.xpath("//a[contains(text(),'My Profile')]")).click();
 		
-		testingChangeLastName();
-		testingPost();
-		testingUploadFile();
+		//testingChangeLastName();
+		//testingPost();
+		//testingUploadFile();
 		testingUploadPhoto();
 	
 		
@@ -70,6 +70,7 @@ public class UserMenuTesingMyProfile extends SFUtility{
         driver.findElement(By.xpath("//a[@id='chatterUploadFileAction']")).click();
         waitExplicitly(3, driver.findElement(By.xpath("//input[@id='chatterFile']")));
         driver.findElement(By.xpath("//input[@id='chatterFile']")).sendKeys("C:\\Users\\Manu-Thinkpad\\Desktop\\Tekarch\\SFDC 37 Testcases.xlsx");
+        
         driver.findElement(By.xpath("//input[@id='publishersharebutton']")).click();
 			
 		}
@@ -83,6 +84,7 @@ public class UserMenuTesingMyProfile extends SFUtility{
 		driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@id='uploadPhotoContentId']")));
 		waitExplicitly(1, driver.findElement(By.xpath("//input[@id='j_id0:uploadFileForm:uploadInputFile']")));
 		driver.findElement(By.xpath("//input[@id='j_id0:uploadFileForm:uploadInputFile']")).sendKeys("C:\\Users\\Manu-Thinkpad\\Desktop\\Selenium.png");
+		waitExplicitly(5, driver.findElement(By.xpath("//input[@id='j_id0:uploadFileForm:save']")));
 		driver.findElement(By.xpath("//input[@id='j_id0:uploadFileForm:save']")).click();
               
 	}

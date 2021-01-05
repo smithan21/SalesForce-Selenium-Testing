@@ -1,5 +1,9 @@
 package com.tekarch.SalesForceTesting;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,7 +33,8 @@ public class SFUtility {
 		wait.until(ExpectedConditions.visibilityOf(ele));
 	}
 	
-	public static void quitBrowser() {
+	public static void quitBrowser() throws InterruptedException {
+		Thread.sleep(3000);
 		driver.quit();
 	}
 	
@@ -44,17 +49,38 @@ public class SFUtility {
 		
 	}
 	
+	public static void closePopUpWindow() throws InterruptedException, AWTException {
+		Thread.sleep(3000);
+		Robot rb = new Robot();
+		rb.keyPress(KeyEvent.VK_ESCAPE);
+		rb.keyRelease(KeyEvent.VK_ESCAPE);
+		Thread.sleep(3000);
+	}
+	
 	public static void userMenuDropDown() {
 		driver.findElement(By.id("userNavLabel")).click();
 		
 	}
 	
-	public static void openAccountLink() {
+	public static void openAccountTab() {
 		driver.findElement(By.xpath("//ul//li[@id='Account_Tab']")).click();
+	}
+	
+	public static void openOpportunityTab() {
+		driver.findElement(By.xpath("//ul//li[@id='Opportunity_Tab']")).click();
+	}
+	
+	public static void openLeadsTab() {
+		driver.findElement(By.xpath("//a[contains(text(),'Leads')]")).click();
+	}
+	
+	public static void openContactsTab() {
+		driver.findElement(By.xpath("//a[contains(text(),'Contacts')]")).click();
 	}
 	
 	public static void LogoutSalesForce() {
 		
+		waitExplicitly(3, driver.findElement(By.id("userNavLabel")));
 		driver.findElement(By.id("userNavLabel")).click();
 		
 		driver.findElement(By.xpath("//a[contains(text(),'Logout')]")).click();
